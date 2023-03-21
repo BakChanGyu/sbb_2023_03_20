@@ -33,7 +33,6 @@ public class AnswerController {
             return "question_detail";
         }
 
-        model.addAttribute("answerForm", answerForm);
         answerService.create(question, answerForm.getContent());
         return String.format("redirect:/sbb/question/detail/%s", id);
     }

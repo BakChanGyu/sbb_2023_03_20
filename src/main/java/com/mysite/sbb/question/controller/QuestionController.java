@@ -1,5 +1,6 @@
 package com.mysite.sbb.question.controller;
 
+import com.mysite.sbb.answer.dto.AnswerForm;
 import com.mysite.sbb.question.dto.QuestionForm;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.service.QuestionService;
@@ -30,10 +31,9 @@ public class QuestionController {
 
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable("id") long id,
-                         @Valid QuestionForm questionForm) {
+                         AnswerForm answerForm) {
         Question question = questionService.getQuestion(id);
 
-        model.addAttribute("questionForm", questionForm);
         model.addAttribute("question", question);
         return "question_detail";
     }
