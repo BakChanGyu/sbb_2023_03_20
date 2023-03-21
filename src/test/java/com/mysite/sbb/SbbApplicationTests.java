@@ -146,4 +146,9 @@ class SbbApplicationTests {
 			assertEquals("sbb는 이것입니다", question.getAnswerList().get(0).getContent());
 		}
 	}
+
+	@Test
+	void t3() {
+		assertEquals(2, 2);
+	}
 }
