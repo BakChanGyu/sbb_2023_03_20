@@ -1,6 +1,8 @@
 package com.mysite.sbb.question.repository;
 
 import com.mysite.sbb.question.entity.Question;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +13,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Question findBySubjectAndContent(String subject, String content);
 
     Question findBySubjectLike(String subject);
+    Page<Question> findAll(Pageable pageable);
 
     @Modifying // 만약 아래 쿼리가 select 이외라면 붙여줘야함.
     @Transactional

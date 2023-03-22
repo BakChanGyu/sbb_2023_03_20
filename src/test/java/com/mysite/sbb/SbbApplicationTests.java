@@ -4,6 +4,7 @@ import com.mysite.sbb.answer.entity.Answer;
 import com.mysite.sbb.answer.repository.AnswerRepository;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.repository.QuestionRepository;
+import com.mysite.sbb.question.service.QuestionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,13 @@ class SbbApplicationTests {
 
 	@Autowired
 	private QuestionRepository questionRepository;
+	@Autowired
+	private QuestionService questionService;
 
 	@Autowired
 	private AnswerRepository answerRepository;
 
-	@BeforeEach // 아래 메서드는 각 테스트케이스가 실행되기 전에 실행된다.
+//	@BeforeEach // 아래 메서드는 각 테스트케이스가 실행되기 전에 실행된다.
 	void beforeEach() {
 		// 모든 데이터 삭제
 		questionRepository.deleteAll();
@@ -150,5 +153,14 @@ class SbbApplicationTests {
 	@Test
 	void t3() {
 		assertEquals(2, 2);
+	}
+
+	@Test
+	void t4() {
+		for (int i = 0; i < 300; i++) {
+			String subject = String.format("테스트 데이터입니다:[%03d]", i);
+			String content = "내용무";
+			questionService.create(subject, content);
+		}
 	}
 }
