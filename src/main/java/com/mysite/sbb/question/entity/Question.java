@@ -1,6 +1,7 @@
 package com.mysite.sbb.question.entity;
 
 import com.mysite.sbb.answer.entity.Answer;
+import com.mysite.sbb.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -30,4 +31,6 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     // OneToMany 에는 직접객체 초기화 << 수업못들음.
     private List<Answer> answerList;
+    @ManyToOne
+    private Member author;
 }

@@ -1,0 +1,54 @@
+package com.mysite.sbb;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+@Configuration
+// 모든 요청 URL이 스프링 시큐리티의 제어를 받도록 만드는 에노테이선.
+// 내부적으로 SpringSecurityFilterChain이 동작하여 URL 필터가 적용된다.
+@EnableWebSecurity
+public class SecurityConfig {
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests().requestMatchers(
+                new AntPathRequestMatcher("/**")).permitAll()
+                .and()
+                .csrf().ignoringRequestMatchers(
+                        new AntPathRequestMatcher("/h2-console/**"))
+                .and()
+                .headers()
+                .addHeaderWriter(new XFrameOptionsHeaderWriter(
+                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN
+                ))
+                .and()
+                .formLogin()
+                .loginPage("/sbb/member/login")
+                .defaultSuccessUrl("/")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/sbb/member/logout"))
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true);
+
+        return http.build();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+}

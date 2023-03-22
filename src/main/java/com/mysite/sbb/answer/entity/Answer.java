@@ -1,5 +1,6 @@
 package com.mysite.sbb.answer.entity;
 
+import com.mysite.sbb.member.entity.Member;
 import com.mysite.sbb.question.entity.Question;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,4 +26,6 @@ public class Answer {
     private LocalDateTime createDate;
     @CreatedDate
     private LocalDateTime modifyDate;
+    @ManyToOne
+    private Member author;
 }

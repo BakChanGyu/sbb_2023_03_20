@@ -17,7 +17,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String root() {
-        return "redirect:/question/list";
+        return "redirect:/sbb/question/list";
     }
 
     public void solution() throws IOException {
