@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -28,4 +29,6 @@ public class Answer {
     private LocalDateTime modifyDate;
     @ManyToOne
     private Member author;
+    @ManyToMany
+    Set<Member> voter;
 }

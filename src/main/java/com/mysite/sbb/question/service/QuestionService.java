@@ -61,4 +61,13 @@ public class QuestionService {
 
         questionRepository.save(question);
     }
+
+    public void delete(Question question) {
+        questionRepository.delete(question);
+    }
+
+    public void vote(Question question, Member member) {
+        question.getVoter().add(member);
+        questionRepository.save(question);
+    }
 }

@@ -101,4 +101,26 @@ public class QuestionController {
 
         return String.format("redirect:/sbb/question/detail/%s", id);
     }
+
+    @GetMapping("/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public String questionDelete(Principal principal,
+                                 @PathVariable("id") Long id) {
+        Question question = questionService.getQuestion(id);
+        if (!question.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+        }
+        questionService.delete(question);
+        return "redirect:/";
+    }
+
+    @GetMapping("/vote/{id}")
+    @PreAuthorize(("isAuthenticated()"))
+    public String questionVote(Principal principal,
+                              @PathVariable("id") Long id) {
+        Question question = questionService.getQuestion(id);
+        Member member = memberService.getMember(principal.getName());
+        questionService.vote(question, member);
+        return String.format("redirect:/sbb/question/detail/%s", id);
+    }
 }

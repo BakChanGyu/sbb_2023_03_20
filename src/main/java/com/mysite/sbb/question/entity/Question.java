@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -33,4 +34,6 @@ public class Question {
     private List<Answer> answerList;
     @ManyToOne
     private Member author;
+    @ManyToMany
+    Set<Member> voter;
 }
